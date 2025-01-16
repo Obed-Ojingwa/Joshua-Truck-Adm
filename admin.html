@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - View Complaints</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header>
+    <h1>Admin - Complaints Dashboard</h1>
+    <p>View and address user complaints.</p>
+  </header>
+
+  <section id="complaints-section">
+    <div id="complaints-list"></div>
+  </section>
+
+  <footer>
+    <p>© 2025 Prime Truck. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Fetch complaints from local storage
+    const complaints = JSON.parse(localStorage.getItem("complaints")) || [];
+
+    const complaintsList = document.getElementById("complaints-list");
+
+    if (complaints.length === 0) {
+      complaintsList.innerHTML = "<p>No complaints found.</p>";
+    } else {
+      complaintsList.innerHTML = complaints
+        .map((complaint, index) => {
+          return `
+            <div class="complaint">
+              <p><strong>Complaint #${index + 1}</strong></p>
+              <p><strong>Name:</strong> ${complaint.name}</p>
+              <p><strong>Email:</strong> ${complaint.email}</p>
+              <p><strong>Message:</strong> ${complaint.complaint}</p>
+              <p><strong>Submitted At:</strong> ${new Date(complaint.timestamp).toLocaleString()}</p>
+              <hr>
+            </div>
+          `;
+        })
+        .join("");
+    }
+  </script>
+</body>
+</html>
